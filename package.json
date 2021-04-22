@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "employee-tracker",
+  "description": "Insert multiple data rows in the same command: https://www.mysqltutorial.org/mysql-insert-multiple-rows/",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suejinkim20/employee-tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suejinkim20/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/suejinkim20/employee-tracker#readme",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}

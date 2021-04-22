@@ -11,11 +11,20 @@ const connection = mysql.createConnection({
   
     // Be sure to update with your own MySQL password!
     password: 'Gardenia89',
-    database: '',
+    database: 'companyDB',
   });
 
   connection.connect((err) => {
       if (err) throw err;
       console.log(`connected as id ${connection.threadId}`);
-    
+      viewEmpl();
   });
+
+const viewEmpl = () => {
+    console.log("Viewing Employees\n");
+    connection.query('SELECT * FROM employee', (err, res) => {
+        if (err) throw err;
+        console.table(res);
+    })
+}
+

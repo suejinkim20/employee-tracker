@@ -18,7 +18,7 @@ VALUES
 -- Managers --
 INSERT INTO employee(first_name, last_name, role_id)
 VALUES
-("Nielson", "Anita", 1),
+("Nielson", "Anita", 1), --manager id should be null
 ("Lovelace", "Ada", 3),
 ("Hood", "Amy", 5),
 ("Bader Ginsburg", "Ruth", 7)
@@ -27,11 +27,11 @@ VALUES
 
 INSERT INTO employee(first_name, last_name, role_id, manager_id)
 VALUES
-('Stradling', 'Bobinette', 2, 1);
-('Gregolin', 'Consuela', 2, 1);
-('Hallin', 'Selinda', 4, 2);
-('Minette', 'Janene', 4, 2);
-('Klassman', 'Sheree', 6, 3);
-('Stiven', 'Patience', 6, 3);
-('Yushkin', 'Kaela', 8, 4);
+('Stradling', 'Bobinette', 2, 1),
+('Gregolin', 'Consuela', 2, 1),
+('Hallin', 'Selinda', 4, 2),
+('Minette', 'Janene', 4, 2),
+('Klassman', 'Sheree', 6, 3),
+('Stiven', 'Patience', 6, 3),
+('Yushkin', 'Kaela', 8, 4),
 ('Espada', 'Lindsey', 8, 4);
