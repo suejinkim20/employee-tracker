@@ -16,7 +16,7 @@ VALUES
 
 -- Employee Data --
 -- Managers --
-INSERT INTO employee(first_name, last_name, role_id)
+INSERT INTO employee(last_name, first_name, role_id)
 VALUES
 ("Nielson", "Anita", 1), --manager id should be null
 ("Lovelace", "Ada", 3),
@@ -25,7 +25,7 @@ VALUES
 
 -- Associates --
 
-INSERT INTO employee(first_name, last_name, role_id, manager_id)
+INSERT INTO employee(last_name, first_name, role_id, manager_id)
 VALUES
 ('Stradling', 'Bobinette', 2, 1),
 ('Gregolin', 'Consuela', 2, 1),
