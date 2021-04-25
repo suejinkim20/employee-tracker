@@ -27,21 +27,45 @@ const viewEmployee = () => {
 }
     
 const addEmployee = () => {
-    console.log("Adding Employee\n");
-    connection.query('INSERT INTO employee SET ?',
-    {
-        first_name: 'bob',
-        last_name: 'smith',
-        role_id: 6,
-        manager_id: 5
-    },
-    (err, res) => {
-        if (err) throw err;
-        console.log('Employee added!')
-        console.table(res);
-        startManager();
-    }
-    )
+    inquirer
+        .prompt([
+            {
+                name: 'first_name',
+                type: 'input',
+                message: 'What is the first name of your employee?'
+            },
+            {
+                name: 'last_name',
+                type: 'input',
+                message: 'What is the last name of your employee?'
+            },
+            {
+                name: 'role_id', // want this to be a list that converts strings to integers
+                type: 'input',
+                message: 'What is the role ID of your employee?'
+            },
+            {
+                name: 'manager_id', // want this to be a list that converts strings to integers; i also want this to be null if they dont have a manager
+                type: 'input',
+                message: 'If your employee has a manager, what is the manager id for your employee?'
+            },
+        ])
+        .then((answer) => { 
+            connection.query('INSERT INTO employee SET ?',
+            {
+                first_name: answer.first_name,
+                last_name: answer.last_name,
+                role_id: answer.role_id,
+                manager_id: answer.manager_id
+            },
+            (err, res) => {
+                if (err) throw err;
+                console.log('Employee added!')
+                //console.table(res);
+                startManager();
+            }
+            )
+        })
 }
     
 const removeEmployee = () => {
@@ -53,7 +77,7 @@ const removeEmployee = () => {
     (err, res) => {
         if (err) throw err;
         console.log('Employee deleted!')
-        console.table(res);
+        //console.table(res);
         startManager();
     }
     )
@@ -73,7 +97,7 @@ const updateEmployee = () => {
     (err, res) => {
         if (err) throw err;
         console.log('Employee Updated!')
-        console.table(res);
+        //console.table(res);
         startManager();
     }
     )
