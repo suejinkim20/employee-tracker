@@ -28,16 +28,20 @@ In order to use this application, you must have Node.js installed, as well as th
 The following videos shows how a user would invoke the application from the command line, how a user would enter responses to all of the prompts in the application, and it allows the user to manage the following functionalities:
 
 View Employees, Departments, and Roles:
+
 ![Video1](https://media.giphy.com/media/00aB1XqEdgF6TDjTc4/giphy.gif)
 
 Add, Update, and Remove Employees:
+
 ![Video2](https://media.giphy.com/media/TW1cXq7a8z20lF1Gfs/giphy.gif)
 ![Video3](https://media.giphy.com/media/tBYopzUQUBn6N61e3h/giphy.gif)
 
 Add and Remove Departments:
+
 ![Video4](https://media.giphy.com/media/rHOoisC759fc78L8wv/giphy.gif)
 
 Add and Remove Roles:
+
 ![Video5](https://media.giphy.com/media/XvtwcZ7lAiZQDHOiEI/giphy.gif)
 ![Video6](https://media.giphy.com/media/a8FNpUIiI12wTuZoB2/giphy.gif)
 
