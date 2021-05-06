@@ -18,12 +18,13 @@ const connection = mysql.createConnection({
 
   
 const viewEmployees = () => {
-      console.log("Viewing Employees\n");
-      connection.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, dept.dept_name AS dept, role.salary, CONCAT(manager.first_name, " ", manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN dept on role.dept_id = dept.id LEFT JOIN employee manager on manager.id = employee.manager_id', (err, results) => {
+    console.log("Viewing Employees\n");
+    connection.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, dept.dept_name AS dept, role.salary, CONCAT(manager.first_name, " ", manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN dept on role.dept_id = dept.id LEFT JOIN employee manager on manager.id = employee.manager_id', (err, results) => {
         if(err)throw err;
         printTable(results);
         startManager();
-    })}
+    })
+}
 
 const viewRoles = () => {
         console.log("Viewing Roles\n");
@@ -42,11 +43,10 @@ const viewDepartments = () => {
     (err, results) => {
         if (err) throw err;
         printTable(results);
-        //startManager();
+        startManager();
       })
 
 }
-
 
 const addEmployee = () => {
     //connection.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, dept.dept_name AS dept, role.salary, CONCAT(manager.first_name, " ", manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN dept on role.dept_id = dept.id LEFT JOIN employee manager on manager.id = employee.manager_id', (err, results) => {
@@ -95,7 +95,7 @@ const addEmployee = () => {
                 },
                 (err, res) => {
                     if (err) throw err;
-                    console.log(`You have successfully added ${answer.first_name} ${answer.last_name} into the company database.`)
+                    console.log(`\n**You have successfully added ${answer.first_name} ${answer.last_name} into the company database**\n`)
                     startManager();
                 }
                 )
@@ -110,17 +110,17 @@ const addDepartment = () => {
             {
                 name: 'dept_name',
                 type: 'input',
-                message: 'What is the first name of the department?'
+                message: 'What is the name of the department?'
             },
         ])
         .then((answer) => {
             connection.query('INSERT INTO dept SET ?',
             {
-                dept: answer.dept_name,
+                dept_name: answer.dept_name,
             },
             (err, res) => {
                 if (err) throw err;
-                console.log('Department added!')
+                console.log(`\n**You have successfully added a ${answer.dept_name} department**\n`)
                 //console.table(res);
                 startManager();
             }
@@ -156,7 +156,7 @@ const addRole = () => {
                 },
                 (err, res) => {
                     if (err) throw err;
-                    console.log('Role added!')
+                    console.log(`\n**You have successfully added the ${answer.title} role **\n`)
                     //console.table(res);
                     startManager();
                 }
@@ -179,22 +179,81 @@ const removeEmployee = () => {
                   },
             ])
             .then((answer) => {
-                console.log("Removing Employee\n");
                     connection.query('DELETE FROM employee WHERE ?',
                     {
                         first_name: answer.choice.split(" ")[0]
                     },
                     (err, res) => {
                         if (err) throw err;
-                        console.log(`You have removed ${answer.choice} from the company database.`)
+                        console.log(`\nYou have removed ${answer.choice} from the company database.`)
                         //console.table(res);
                         startManager();
                     })
             })
     })
     
- }
-    
+}
+   
+const removeDepartment = () => {
+    connection.query('SELECT * FROM dept', (err, results) => {
+        if (err) throw err;
+        inquirer
+            .prompt([
+                {
+                    name: 'choice',
+                    type: 'rawlist',
+                    choices() {
+                      return results.map(({ dept_name }) => `${dept_name}`);
+                    },
+                    message: 'Please select a department to remove.',
+                  },
+            ])
+            .then((answer) => {
+                    connection.query('DELETE FROM dept WHERE ?',
+                    {
+                        dept_name: answer.choice,
+                    },
+                    (err, res) => {
+                        if (err) throw err;
+                        console.log(`\nYou have removed the ${answer.choice} department from the company database.`)
+                        //console.table(res);
+                        startManager();
+                    })
+            })
+    })
+
+}
+
+const removeRole = () => {
+    connection.query('SELECT role.id AS role_id, role.title, role.salary, dept.dept_name FROM role RIGHT JOIN dept on dept.id = dept_id', (err, results) => {
+        if (err) throw err;
+        inquirer
+            .prompt([
+                {
+                    name: 'choice',
+                    type: 'rawlist',
+                    choices() {
+                      return results.map(({ title, dept_name }) => `${title}, ${dept_name} department`);
+                    },
+                    message: 'Please select a role to remove.',
+                  },
+            ])
+            .then((answer) => {
+                    connection.query('DELETE FROM role WHERE ?',
+                    {
+                        title: answer.choice.split(",")[0]
+                    },
+                    (err, res) => {
+                        if (err) throw err;
+                        console.log(`\nYou have removed ${answer.choice} from the company database.`)
+                        //console.table(res);
+                        startManager();
+                    })
+            })
+    })
+
+}
+
 const updateEmployee = () => {
     connection.query('SELECT * FROM employee', (err, results) => {
         if (err) throw err;
@@ -204,7 +263,7 @@ const updateEmployee = () => {
                     name: 'choice',
                     type: 'rawlist',
                     choices() {
-                      return results.map(({ first_name, last_name }) => `${first_name} ${last_name}`);
+                      return results.map(({ first_name, last_name, role_id }) => `${first_name} ${last_name} ( RoleId: ${role_id} )`);
                     },
                     message: 'Please select an employee to update.',
                   },
@@ -216,47 +275,27 @@ const updateEmployee = () => {
             ])
             .then((answer) => {
                 console.log("Updating Employee\n");
-                    connection.query('UPDATE employee SET ? WHERE ?',
-                    {
-                        first_name: answer.choice.split(" ")[0],
-                        role_id: answer.update_role,
-                    },
-                    (err, res) => {
+                console.log(answer.choice);
+                console.log(answer.update_role);
+                    connection.query(
+                        'UPDATE employee SET ? WHERE ?',
+                        [
+                            {
+                                role_id: answer.update_role
+                            },
+                            {
+                                first_name: answer.choice.split(" ")[0]
+                            },
+                        ],
+                        (err, res) => {
                         if (err) throw err;
-                        console.log('Employee updated!')
+                        console.log(`You have successfully updated ${answer.choice.split(" ")[0]} ${answer.choice.split(" ")[1]}'s role.`)
                         //console.table(res);
                         startManager();
-                    })
+                    }
+                    )
             })
     })
-
-
-
-//     // inquirer
-//     //     .prompt([
-//     //         {
-
-//     //         }
-//     //     ])
-
-
-//     console.log("Updating Employee\n")
-//     connection.query('UPDATE employee SET ? WHERE ?',
-//     [
-//         {
-//             role_id: 6,
-//         },
-//         {
-//             first_name: 'bob',
-//         },
-//     ],
-//     (err, res) => {
-//         if (err) throw err;
-//         console.log('Employee Updated!')
-//         //console.table(res);
-//         startManager();
-//     }
-//     )
 }
 
 // const viewEmployeeByManager = () => {
@@ -275,7 +314,6 @@ const updateEmployee = () => {
 //     })
 // }
 
-
 const startManager = () => {
     inquirer
         .prompt({
@@ -291,11 +329,12 @@ const startManager = () => {
                 'Add a Role', 
                 'Update Employee Role', 
                 'Remove an Employee', 
+                'Remove a Department',
+                'Remove a Role',
                 /*'View Employees by Manager',*/
                 'Exit']
         })
         .then((answer) => {
-            //switch case answer.managerAction
             switch (answer.managerAction) {
                 case 'View Employees':
                     viewEmployees();
@@ -321,6 +360,12 @@ const startManager = () => {
                 case 'Remove an Employee':
                     removeEmployee();
                     break;
+                case 'Remove a Department':
+                    removeDepartment();
+                    break;
+                case 'Remove a Role':
+                    removeRole();
+                    break;
                 //case 'View Employees by Manager':
                 //    viewEmployeeByManager();
                 //    break;
@@ -333,7 +378,6 @@ const startManager = () => {
 
 connection.connect((err) => {
     if (err) throw err;
-    console.log(`connected as id ${connection.threadId}`);
-    //startManager();
-    addEmployee();
+    console.log(`Connected as id ${connection.threadId}`);
+    startManager();
 });

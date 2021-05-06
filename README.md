@@ -17,10 +17,29 @@ This is a command line application that can be used to manage the information fo
     * Add a Role- the user can add a role by inputting the role's
     * Update Employee Role- the user can update an employee's role by selecting the employee from a list and inputting the new role ID
     * Remove an Employee- the user can remove an employee by selecting the employee from a list
+    * Remove a Department - the user can remove a department by selecting it from a list
+    * Remove a Role - the user can remove a role by selecting it from a list
     * Exit- ends the connection
 
 
 ## Usage
+In order to use this application, you must have Node.js installed, as well as the Inquirer package (see links below in Credits). You must also have MySQL downloaded and have the company_db set up and seeded.
+
+The following videos shows how a user would invoke the application from the command line, how a user would enter responses to all of the prompts in the application, and it allows the user to manage the following functionalities:
+
+View Employees, Departments, and Roles:
+![Video1](https://media.giphy.com/media/00aB1XqEdgF6TDjTc4/giphy.gif)
+
+Add, Update, and Remove Employees:
+![Video2](https://media.giphy.com/media/TW1cXq7a8z20lF1Gfs/giphy.gif)
+![Video3](https://media.giphy.com/media/tBYopzUQUBn6N61e3h/giphy.gif)
+
+Add and Remove Departments:
+![Video4](https://media.giphy.com/media/rHOoisC759fc78L8wv/giphy.gif)
+
+Add and Remove Roles:
+![Video5](https://media.giphy.com/media/XvtwcZ7lAiZQDHOiEI/giphy.gif)
+![Video6](https://media.giphy.com/media/a8FNpUIiI12wTuZoB2/giphy.gif)
 
 
 ## Technologies Used
