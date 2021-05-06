@@ -23,7 +23,7 @@ This is a command line application that can be used to manage the information fo
 
 
 ## Usage
-In order to use this application, you must have Node.js installed, as well as the Inquirer package (see links below in Credits). You must also have MySQL downloaded and have the company_db set up and seeded.
+In order to use this application, you must have Node.js installed, as well as the Inquirer package (see links below in Credits). You must also have MySQL downloaded and have the company_db set up and seeded. You must also input your MySQL password into the server.js file.
 
 The following videos shows how a user would invoke the application from the command line, how a user would enter responses to all of the prompts in the application, and it allows the user to manage the following functionalities:
 
