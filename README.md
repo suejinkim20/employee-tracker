@@ -1,8 +1,5 @@
 # employee-tracker
 
-Insert multiple data rows in the same command: https://www.mysqltutorial.org/mysql-insert-multiple-rows/
-
-
 ## Description
 This is a command line application that can be used to manage the information for departments, roles, and employees at a company. This application uses InquirerJs npm to run command line prompts and MySQL npm to connect to the user's MySQL database and perform queries.
 
