@@ -21,6 +21,9 @@ This is a command line application that can be used to manage the information fo
     * Remove a Role - the user can remove a role by selecting it from a list
     * Exit- ends the connection
 
+### Issues
+* Add employee function prompts user to enter an integer for role ID and manager's role ID rather than a selectable list. I was unable to figure out the correct combination of joins and selects to get these lists to appear. However, the text for the employee's role title and manager name do appear when the user chooses to view employees after adding.
+* Similarly, the Update employee function prompts the user to input an integer for the employee's new role ID rather than selecting the new role from a list.
 
 ## Usage
 In order to use this application, you must have Node.js installed, as well as the Inquirer package (see links below in Credits). You must also have MySQL downloaded and have the company_db set up and seeded. You must also input your MySQL password into the server.js file.
